@@ -293,6 +293,17 @@ def build_tree(gamestate):
     #if not (gamestate.name.monsters or gamestate.name.player.current_hp <= 0 or three_end_turns(gamestate.name.decision)):
     if (not gamestate.name.monsters) or (gamestate.name.player.current_hp <= 0) or (three_end_turns(gamestate.name.decision)):
         return
+
+    # original_stdout = sys.stdout
+    # with open('cards.txt', 'a') as f:
+    #     sys.stdout = f
+    #     print(gamestate.name.hand)
+    #     print(gamestate.name.draw_pile)
+    #     print(gamestate.name.discard_pile)
+    #     print(gamestate.name.player.energy)
+    #     print(" ")
+    # sys.stdout = original_stdout
+
     for c in gamestate.name.hand:
         if c.name not in ["Ascender's Bane","Clumsy","Curse of the Bell","Doubt","Injury","Necronomicurse","Normality","Pain","Parasite","Regret","Shame","Writhe","Burn","Dazed","Void","Wound"]:
             if gamestate.name.player.energy >= c.cost:
@@ -431,43 +442,42 @@ class SimpleAgent:
                 return EndTurnAction()
 
             #simple play the card in pca[0]
+            if len(pca) == 1:
+                original_stdout = sys.stdout
+                with open('simcard vs cards.txt', 'a') as f:
+                    sys.stdout = f
+                    print('card to play = ' + pca[0].name + pca[0].uuid)
+                    for c in self.game.hand:
+                        print(c.name + c.uuid)
+                sys.stdout = original_stdout
+                for c in self.game.hand:
+                    if c.uuid == pca[0].uuid:
+                        return PlayCardAction(c)
+
+            #if card needs a target(s)
+            #format pca[0] card, pca[1] target index
+            if (len(pca) == 2) and (isinstance(pca[1], int)):
+                for c in self.game.hand:
+                    if c.uuid == pca[0].uuid:
+                        return PlayCardAction(card = c, target_monster = self.game.monsters[pca[1]])
+
+            #else format is pca[0] is the card to play
+            #pca[1] is the second Action to do
+            #pca[1][0] is the monster target index, can have 'No Monster Target'
+            #pca[1][1] is the card to be selected, can have 'No Card Target'
             else:
-                if len(pca) == 1:
-                    original_stdout = sys.stdout
-                    with open('simcard vs cards.txt', 'a') as f:
-                        sys.stdout = f
-                        print('card to play = ' + pca[0].name + pca[0].uuid)
-                        for c in self.game.hand:
-                            print(c.name + c.uuid)
-                    sys.stdout = original_stdout
-                    for c in self.game.hand:
-                        if c.uuid == pca[0].uuid:
-                            return PlayCardAction(c)
-
-                #if card needs a target(s)
-                #format pca[0] card, pca[1] target index
-                if (len(pca) == 2) and (isinstance(pca[1], int)):
-                    for c in self.game.hand:
-                        if c.uuid == pca[0].uuid:
-                            return PlayCardAction(card = c, target_monster = self.game.monsters[pca[1]])
-
-                #else format is pca[0] is the card to play
-                #pca[1] is the second Action to do
-                #pca[1][0] is the monster target index, can have 'No Monster Target'
-                #pca[1][1] is the card to be selected, can have 'No Card Target'
-                else:
-                    for c in self.game.hand:
-                        if c.uuid == pca[0].uuid:
-                            pca[0] = c
-                    #converting monster index to object
-                    if isinstance(pca[1][0],int):
-                        pca[1][0] = self.game.monsters[pca[1][0]]
-                    #convert sim card object to real card
-                    if not (pca[1][1] == 'No Card Target'):
-                        for c in self.game.hand + self.game.draw_pile + self.game.discard_pile + self.game.exhaust_pile:
-                            if c.uuid == pca[1][1].uuid:
-                                pca[1][1] = c
-                                return DoubleAction([pca[0],pca[1]])
+                for c in self.game.hand:
+                    if c.uuid == pca[0].uuid:
+                        pca[0] = c
+                #converting monster index to object
+                if isinstance(pca[1][0],int):
+                    pca[1][0] = self.game.monsters[pca[1][0]]
+                #convert sim card object to real card
+                if not (pca[1][1] == 'No Card Target'):
+                    for c in self.game.hand + self.game.draw_pile + self.game.discard_pile + self.game.exhaust_pile:
+                        if c.uuid == pca[1][1].uuid:
+                            pca[1][1] = c
+                            return DoubleAction([pca[0],pca[1]])
 
         if self.game.end_available:
             return EndTurnAction()
@@ -527,7 +537,7 @@ class SimpleAgent:
         with open('tree.txt', 'w', encoding='utf8') as f:
             sys.stdout = f
             for pre, fill, node in RenderTree(root):
-                print("%s%s" % (pre, 'decision' + str(node.name.decision) + ' energy = ' + str(node.name.player.energy)))
+                print("%s%s" % (pre, 'decision' + str(node.name.decision)))
                 # for c in node.name.hand:
                 #     print(pre, c.name + ' ' + c.uuid)
         sys.stdout = original_stdout
