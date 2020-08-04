@@ -66,55 +66,55 @@ def eval_function(gamestate):
             eval -= m.current_hp
             eval -= (m.move_adjusted_damage * m.move_hits)
             for mpower in gamestate.player.powers:
-                if mpower.name == 'Strength':
+                if mpower.power_name == 'Strength':
                     eval -= mpower.amount
-                if mpower.name == 'Weakened':
+                if mpower.power_name == 'Weakened':
                     eval += mpower.amount
-                if mpower.name == 'Vulnerable':
+                if mpower.power_name == 'Vulnerable':
                     eval += mpower.amount
-                if mpower.name == 'Rage':
+                if mpower.power_name == 'Rage':
                     eval -= mpower.amount
-                if mpower.name == 'Double Tap':
+                if mpower.power_name == 'Double Tap':
                     eval -= (mpower.amount * 25)
-                if mpower.name == 'Flame Barrier':
+                if mpower.power_name == 'Flame Barrier':
                     eval -= mpower.amount
-                if mpower.name == 'Dexterity':
+                if mpower.power_name == 'Dexterity':
                     eval -= mpower.amount
-                if mpower.name == 'Juggernaut':
+                if mpower.power_name == 'Juggernaut':
                     eval -= mpower.amount
-                if mpower.name == 'Dark Embrace':
+                if mpower.power_name == 'Dark Embrace':
                     eval -= mpower.amount
-                if mpower.name == 'Feel No Pain':
+                if mpower.power_name == 'Feel No Pain':
                     eval -= mpower.amount
-                if mpower.name == 'Sentinel':
+                if mpower.power_name == 'Sentinel':
                     eval -= mpower.amount
-                if mpower.name == 'No Draw':
+                if mpower.power_name == 'No Draw':
                     eval += mpower.amount
-                if mpower.name == 'Evolve':
+                if mpower.power_name == 'Evolve':
                     eval -= mpower.amount
-                if mpower.name == 'Fire Breathing':
+                if mpower.power_name == 'Fire Breathing':
                     eval -= mpower.amount
-                if mpower.name == 'Combust':
+                if mpower.power_name == 'Combust':
                     eval -= mpower.amount
-                if mpower.name == 'Rupture':
+                if mpower.power_name == 'Rupture':
                     eval -= mpower.amount
-                if mpower.name == 'Flex':
+                if mpower.power_name == 'Flex':
                     eval -= mpower.amount
-                if mpower.name == 'Metallicize':
+                if mpower.power_name == 'Metallicize':
                     #number of block in the end
                     eval -= (mpower.amount*(mpower.amount + 1))/2
-                if mpower.name == 'Poison':
+                if mpower.power_name == 'Poison':
                     #number of damage in the end
                     eval += (mpower.amount*(mpower.amount + 1))/2
-                if mpower.name == 'Energized':
+                if mpower.power_name == 'Energized':
                     eval -= 100
-                if mpower.name == 'Barricade':
+                if mpower.power_name == 'Barricade':
                     eval -= (gamestate.player.block * 2)
-                if mpower.name == 'Demon Form':
+                if mpower.power_name == 'Demon Form':
                     eval -= (mpower.amount * 100)
-                if mpower.name == 'Brutality':
+                if mpower.power_name == 'Brutality':
                     eval -= (mpower.amount * 25)
-                if mpower.name == 'Rupture':
+                if mpower.power_name == 'Rupture':
                     eval -= (mpower.amount * 25)
             #have to do monster powers
 
@@ -421,63 +421,7 @@ class SimpleAgent:
                 potion_action = self.use_next_potion()
                 if potion_action is not None:
                     return potion_action
-            original_stdout = sys.stdout
-            with open('before get_play_card_action.txt', 'a') as f:
-                sys.stdout = f
-                for c in self.game.hand:
-                    print(c.name + c.uuid)
-            sys.stdout = original_stdout
-
-            pca = self.get_play_card_action()
-            #pca returns simulated objects, need to convert them to the real objects
-
-            #end turn should be the only string
-            original_stdout = sys.stdout
-            with open('PCA.txt', 'w') as f:
-                sys.stdout = f
-                print(pca)
-                print(len(pca))
-            sys.stdout = original_stdout
-            if isinstance(pca, str):
-                return EndTurnAction()
-
-            #simple play the card in pca[0]
-            if len(pca) == 1:
-                original_stdout = sys.stdout
-                with open('simcard vs cards.txt', 'a') as f:
-                    sys.stdout = f
-                    print('card to play = ' + pca[0].name + pca[0].uuid)
-                    for c in self.game.hand:
-                        print(c.name + c.uuid)
-                sys.stdout = original_stdout
-                for c in self.game.hand:
-                    if c.uuid == pca[0].uuid:
-                        return PlayCardAction(c)
-
-            #if card needs a target(s)
-            #format pca[0] card, pca[1] target index
-            if (len(pca) == 2) and (isinstance(pca[1], int)):
-                for c in self.game.hand:
-                    if c.uuid == pca[0].uuid:
-                        return PlayCardAction(card = c, target_monster = self.game.monsters[pca[1]])
-
-            #else format is pca[0] is the card to play
-            #pca[1] is the second Action to do
-            #pca[1][0] is the monster target index, can have 'No Monster Target'
-            #pca[1][1] is the card to be selected, can have 'No Card Target'
-            else:
-                for c in self.game.hand:
-                    if c.uuid == pca[0].uuid:
-                        pca[0] = c
-                #converting monster index to object
-                if isinstance(pca[1][0],int):
-                    pca[1][0] = self.game.monsters[pca[1][0]]
-                #convert sim card object to real card
-                if not (pca[1][1] == 'No Card Target'):
-                    for c in self.game.hand + self.game.draw_pile + self.game.discard_pile + self.game.exhaust_pile:
-                        if c.uuid == pca[1][1].uuid:
-                            pca[1][1] = c
-                            return DoubleAction([pca[0],pca[1]])
+            return self.get_play_card_action()
 
         if self.game.end_available:
             return EndTurnAction()
@@ -542,7 +486,43 @@ class SimpleAgent:
                 #     print(pre, c.name + ' ' + c.uuid)
         sys.stdout = original_stdout
 
-        return self.max_leaf_decision(root)
+        d = self.max_leaf_decision(root)
+
+        if isinstance(d, str):
+            return EndTurnAction()
+
+        #simple play the card in d[0]
+        if len(d) == 1:
+            for c in self.game.hand:
+                if c.uuid == d[0].uuid:
+                    d[0] = c
+            return PlayCardAction(d)
+
+        #if card needs a target(s)
+        #format d[0] card, d[1] target index
+        if (len(d) == 2) and (isinstance(d[1], int)):
+            for c in self.game.hand:
+                if c.uuid == d[0].uuid:
+                    d[0] = c
+            return PlayCardAction(card = c, target_monster = self.game.monsters[d[1]])
+
+        #else format is d[0] is the card to play
+        #d[1] is the second Action to do
+        #d[1][0] is the monster target index, can have 'No Monster Target'
+        #d[1][1] is the card to be selected, can have 'No Card Target'
+        else:
+            for c in self.game.hand:
+                if c.uuid == d[0].uuid:
+                    d[0] = c
+            #converting monster index to object
+            if isinstance(d[1][0],int):
+                d[1][0] = self.game.monsters[d[1][0]]
+            #convert sim card object to real card
+            if not (d[1][1] == 'No Card Target'):
+                for c in self.game.hand + self.game.draw_pile + self.game.discard_pile + self.game.exhaust_pile:
+                    if c.uuid == d[1][1].uuid:
+                        d[1][1] = c
+                return DoubleAction(d)
 
     def use_next_potion(self):
         for potion in self.game.get_real_potions():
