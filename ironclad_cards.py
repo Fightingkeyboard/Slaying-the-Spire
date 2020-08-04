@@ -83,13 +83,13 @@ def dealdmg(gamestate, damage, monster, attacknum = 1):
             damage = math.floor(damage * 0.75)
 
     #debugging
-    original_stdout = sys.stdout
-    with open('dealdmg.txt', 'w') as f:
-        sys.stdout = f
-        print('param monster = ' + str(monster))
-        for index, object in enumerate(newstate.monsters):
-            print('index = ' + str(index) +' monster = ' + object.name)
-    sys.stdout = original_stdout
+    # original_stdout = sys.stdout
+    # with open('dealdmg.txt', 'w') as f:
+    #     sys.stdout = f
+    #     print('param monster = ' + str(monster))
+    #     for index, object in enumerate(newstate.monsters):
+    #         print('index = ' + str(index) +' monster = ' + object.name)
+    # sys.stdout = original_stdout
 
 
     for pmonster in newstate.monsters[monster].powers:
@@ -249,6 +249,7 @@ def dealvulnerable(gamestate, amount, monster):
 
     newvulnerable = Power('Vulnerable', 'Vulnerable', amount)
     newstate.monsters[monster].powers.append(newvulnerable)
+
     # is_it_exisited = False
 
     # if len(gamestate.monsters) != 0:
