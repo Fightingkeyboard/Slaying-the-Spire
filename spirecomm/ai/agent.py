@@ -504,7 +504,7 @@ class SimpleAgent:
             for c in self.game.hand:
                 if c.uuid == d[0].uuid:
                     d[0] = c
-            return PlayCardAction(card = c, target_monster = self.game.monsters[d[1]])
+            return PlayCardAction(card = d[0], target_monster = self.game.monsters[d[1]])
 
         #else format is d[0] is the card to play
         #d[1] is the second Action to do
