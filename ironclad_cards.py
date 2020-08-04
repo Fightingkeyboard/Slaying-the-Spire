@@ -200,9 +200,10 @@ def addblock(gamestate, block):
 def addcard(gamestate, name, pile, cardobj = False):
     newstate = gamestate
     #newcard = card(name, name, card_type, "", upgrades=0, has_target=False, cost=0, uuid="", misc=0, price=0, is_playable=False, exhausts=False):
-    newcard = Card(name = name, upgrades = 0, cost = cards[name][0], card_id = 'temp', card_type = 1, rarity = 'temp')
-    if isinstance(cardobj, bool):
+    if not isinstance(cardobj, bool):
         newcard = cardobj
+    else:
+        newcard = Card(name = name, upgrades = 0, cost = cards[name][0], card_id = 'temp', card_type = 1, rarity = 'temp')
     if pile == 'discard_pile':
         newstate.discard_pile.append(newcard)
     if pile == 'hand':
@@ -240,23 +241,31 @@ def dealvulnerable(gamestate, amount, monster):
         #print("monster power : " + str(newstate.monsters[monster].powers[0].power_name))
         sys.stdout = original_stdout  # Reset the standard output to its original value
     """
-    is_it_exisited = False
 
-    if len(gamestate.monsters) != 0:
-        for x in range(len(newstate.monsters[monster].powers)):
-            if newstate.monsters[monster].powers[x].power_name == "Vulnerable":
-                pmonster.amount = pmonster.amount + amount
-                is_it_exisited = True
+    for pmonster in newstate.monsters[monster].powers:
+        if pmonster.power_name == 'Vulnerable':
+            pmonster.amount += amount
+            return newstate
+
+    newvulnerable = Power('Vulnerable', 'Vulnerable', amount)
+    newstate.monsters[monster].powers.append(newvulnerable)
+    # is_it_exisited = False
+
+    # if len(gamestate.monsters) != 0:
+    #     for x in range(len(newstate.monsters[monster].powers)):
+    #         if newstate.monsters[monster].powers[x].power_name == "Vulnerable":
+    #             pmonster.amount = pmonster.amount + amount
+    #             is_it_exisited = True
 
     #for pmonster in newstate.monsters[monster].powers[x]:
     #    if pmonster.power_name == "Vulnerable":
     #        pmonster.amount = pmonster.amount + amount
     #        is_it_exisited = True
 
-        if not is_it_exisited:
-            newvulnerable = Power("Vulnerable", "Vulnerable", amount)
-            newvulnerable.just_applied = True
-            newstate.monsters[monster].powers.append(newvulnerable)
+        # if not is_it_exisited:
+        #     newvulnerable = Power("Vulnerable", "Vulnerable", amount)
+        #     newvulnerable.just_applied = True
+        #     newstate.monsters[monster].powers.append(newvulnerable)
 
 
     return newstate
@@ -323,7 +332,7 @@ def draw(gamestate, amount):
 
     left = amount - len(newstate.draw_pile)
 
-    original_stdout_ = sys.stdout
+    # original_stdout_ = sys.stdout
     """
     with open('a0_test.txt', 'a') as f:
          sys.stdout = f  # Change the standard output to the file we created.
@@ -654,7 +663,10 @@ def end_of_turn(gamestate):
     #ethereal : If you manage to discard the card from your hand, it won't get Exhausted.
     for card in newstate.hand:
         if card.name in ['Apparition', "Ascender's Bane", 'Carnage', "Ascender's Bane+", 'Carnage+', 'Clumsy', 'Clumsy+', 'Dazed', 'Dazed+', 'Echo Form', 'Ghostly Armor', 'Ghostly Armor+', 'Void', 'Void+', 'Deva Form']:
-            newstate = addcard(gamestate, card.name, 'exhaust_pile', card)
+            newstate = addcard(newstate, card.name, 'exhaust_pile', card)
+            newstate.hand.remove(card)
+        else:
+            newstate = addcard(newstate, card.name, 'discard_pile', card)
             newstate.hand.remove(card)
 
     return newstate
@@ -663,12 +675,10 @@ def start_of_turn(gamestate):
     newstate = gamestate
 
     #reset energy/mana
+    newstate.player.energy = 3
     for player_power in newstate.player.powers:
         if player_power.power_name == "Energized":
             newstate.player.energy = newstate.player.energy + player_power.amount
-        else:
-            newstate.player.energy = 3
-            raise Exception('energy reset')
 
     #at the start of your turn, Block no longer expires
     # else do reset the block
