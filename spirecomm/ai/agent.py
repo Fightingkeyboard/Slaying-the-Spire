@@ -120,55 +120,55 @@ def eval_function(gamestate):
 
     #have to do player powers
     for ppower in gamestate.player.powers:
-        if ppower.name == 'Strength':
+        if ppower.power_name == 'Strength':
             eval += ppower.amount
-        if ppower.name == 'Weakened':
+        if ppower.power_name == 'Weakened':
             eval -= ppower.amount
-        if ppower.name == 'Vulnerable':
+        if ppower.power_name == 'Vulnerable':
             eval -= ppower.amount
-        if ppower.name == 'Rage':
+        if ppower.power_name == 'Rage':
             eval += ppower.amount
-        if ppower.name == 'Double Tap':
+        if ppower.power_name == 'Double Tap':
             eval += (ppower.amount * 25)
-        if ppower.name == 'Flame Barrier':
+        if ppower.power_name == 'Flame Barrier':
             eval += ppower.amount
-        if ppower.name == 'Dexterity':
+        if ppower.power_name == 'Dexterity':
             eval += ppower.amount
-        if ppower.name == 'Juggernaut':
+        if ppower.power_name == 'Juggernaut':
             eval += ppower.amount
-        if ppower.name == 'Dark Embrace':
+        if ppower.power_name == 'Dark Embrace':
             eval += ppower.amount
-        if ppower.name == 'Feel No Pain':
+        if ppower.power_name == 'Feel No Pain':
             eval += ppower.amount
-        if ppower.name == 'Sentinel':
+        if ppower.power_name == 'Sentinel':
             eval += ppower.amount
-        if ppower.name == 'No Draw':
+        if ppower.power_name == 'No Draw':
             eval -= ppower.amount
-        if ppower.name == 'Evolve':
+        if ppower.power_name == 'Evolve':
             eval += ppower.amount
-        if ppower.name == 'Fire Breathing':
+        if ppower.power_name == 'Fire Breathing':
             eval += ppower.amount
-        if ppower.name == 'Combust':
+        if ppower.power_name == 'Combust':
             eval += ppower.amount
-        if ppower.name == 'Rupture':
+        if ppower.power_name == 'Rupture':
             eval += ppower.amount
-        if ppower.name == 'Flex':
+        if ppower.power_name == 'Flex':
             eval += ppower.amount
-        if ppower.name == 'Metallicize':
+        if ppower.power_name == 'Metallicize':
             #number of block in the end
             eval += (ppower.amount*(ppower.amount + 1))/2
-        if ppower.name == 'Poison':
+        if ppower.power_name == 'Poison':
             #number of damage in the end
             eval -= (ppower.amount*(ppower.amount + 1))/2
-        if ppower.name == 'Energized':
+        if ppower.power_name == 'Energized':
             eval += 100
-        if ppower.name == 'Barricade':
+        if ppower.power_name == 'Barricade':
             eval += (gamestate.player.block * 2)
-        if ppower.name == 'Demon Form':
+        if ppower.power_name == 'Demon Form':
             eval += (ppower.amount * 100)
-        if ppower.name == 'Brutality':
+        if ppower.power_name == 'Brutality':
             eval += (ppower.amount * 25)
-        if ppower.name == 'Rupture':
+        if ppower.power_name == 'Rupture':
             eval += (ppower.amount * 25)
     #have to do potions
 
@@ -471,7 +471,7 @@ class SimpleAgent:
 
 
         #make SimGame object containing current real gamestate
-        n = getstate(self.game)
+        n = getstate(copy.deepcopy(self.game))
         #root node containing current real gamestate
         root = Node(n, parent=None)
         build_tree(root)
@@ -491,12 +491,22 @@ class SimpleAgent:
         if isinstance(d, str):
             return EndTurnAction()
 
+        with open('PCA.txt', 'w') as f:
+            sys.stdout = f
+            print(d)
+            print(len(d))
+            for m in range(len(self.game.monsters)):
+                print('index' + str(m))
+                print(self.game.monsters[m].name)
+            print(" ")
+        sys.stdout = original_stdout
+
         #simple play the card in d[0]
         if len(d) == 1:
             for c in self.game.hand:
                 if c.uuid == d[0].uuid:
                     d[0] = c
-            return PlayCardAction(d)
+            return PlayCardAction(d[0])
 
         #if card needs a target(s)
         #format d[0] card, d[1] target index
