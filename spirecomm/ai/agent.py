@@ -482,7 +482,7 @@ class SimpleAgent:
         with open('tree.txt', 'w', encoding='utf8') as f:
             sys.stdout = f
             for pre, fill, node in RenderTree(root):
-                print("%s%s" % (pre, 'decision' + str(node.name.decision)))
+                print("%s%s%s" % (pre, 'decision' + str(node.name.decision), node.name.grade))
                 # for c in node.name.hand:
                 #     print(pre, c.name + ' ' + c.uuid)
         sys.stdout = original_stdout
