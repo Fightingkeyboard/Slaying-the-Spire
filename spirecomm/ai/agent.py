@@ -488,6 +488,7 @@ class SimpleAgent:
         sys.stdout = original_stdout
 
         d = self.max_leaf_decision(root)
+        root = None; #delete tree
 
         if isinstance(d, str):
             return EndTurnAction()
