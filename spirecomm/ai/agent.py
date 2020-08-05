@@ -490,6 +490,8 @@ class SimpleAgent:
         d = self.max_leaf_decision(root)
         root = None; #delete tree
 
+        if d == None:
+
         if isinstance(d, str):
             return EndTurnAction()
 
