@@ -148,7 +148,7 @@ def player_take_damage(gamestate):
     #check all monsters
     for monster in range(len(newstate.monsters)):
         # check is_monster_dead
-    	if not monster.is_gone:
+    	if not newstate.monsters[monster].is_gone:
             # Attack n times
             for attackmum in range(newstate.monsters[monster].move_hits):
                 # lose block first
