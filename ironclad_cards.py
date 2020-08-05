@@ -1054,12 +1054,16 @@ def Dropkick(gamestate, hitmonster, Upgrade):
 def Dual_Wield(gamestate, Upgrade):
     newstate = gamestate
     if Upgrade:
+        #random for now
+        cardindex = random.randrange(len(newstate.hand))
         for card in newstate.hand:
             if card.type == CardType.ATTACK or card.type == CardType.POWER:
                 #add Create two copy of an Attack or Power Card.
                 newstate = addcard(newstate, newstate.hand[cardindex].name, 'hand', newstate.hand[cardindex])
                 newstate = addcard(newstate, newstate.hand[cardindex].name, 'hand', newstate.hand[cardindex])
     else:
+        #random for now
+        cardindex = random.randrange(len(newstate.hand))
         for card in newstate.hand:
             if card.type == CardType.ATTACK or card.type == CardType.POWER:
                 #add Create a copy of an Attack or Power Card.
@@ -1090,8 +1094,10 @@ def Evolve(gamestate, hitmonster, Upgrade):
     return newstate
 
 #exhume 1 cost Place a card from your Exhaust pile into your hand. Exhaust.
-def Exhume(gamestate, cardindex, Upgrade):
+def Exhume(gamestate, Upgrade):
     newstate = gamestate
+    # random for now
+    cardindex = random.randrange(len(newstate.exhuast_pile))
     #add Place a card from your Exhaust pile
     newstate = addcard(gamestate, newstate.exhaust_pile[cardindex].name, 'hand')
     #Exhaust
@@ -1346,7 +1352,7 @@ def Impervious(gamestate, Upgrade):
     return newstate
 
 #infernal blade 1 cost Add a random Attack to your hand. It costs 0 this turn. Exhaust.
-def Infernal_Blade(gamestate, hitmonster, Upgrade):
+def Infernal_Blade(gamestate, Upgrade):
     newstate = gamestate
     if Upgrade:
         # cost is 0
@@ -1878,10 +1884,12 @@ def Uppercut(gamestate, hitmonster, Upgrade):
     return newstate
 
 #warcry 0 cost Draw 1 card. Place a card from your hand on top of your draw pile. Exhaust.
-def Warcry(gamestate, cardindex, Upgrade):
+def Warcry(gamestate, Upgrade):
     newstate = gamestate
 
     if Upgrade:
+        #random for now
+        cardindex = random.randrange(len(newstate.hand))
         #Draw 2 Card
         newstate = draw(newstate, 2)
         #Place a Card from your hand on top of your draw pile.
@@ -1889,6 +1897,8 @@ def Warcry(gamestate, cardindex, Upgrade):
         newstate = addcard(newstate, "Warcry", 'exhaust_pile')
 
     else:
+        #random for now
+        cardindex = random.randrange(len(newstate.hand))
         #Draw 1 Card
         newstate = draw(newstate, 1)
         #Place a Card from your hand on top of your draw pile.
