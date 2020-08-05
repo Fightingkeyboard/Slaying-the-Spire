@@ -551,7 +551,7 @@ def end_of_turn(gamestate):
                         newstate.monsters[monster].block = 0
                         newstate.monsters[monster].current_hp - left
                     else:
-                        newstate.pmonster.block -= pmonster.amount
+                        newstate.monsters[monster].block -= pmonster.amount
                 else:
                     newstate.monsters[monster].current_hp -= pmonster.amount
     #player
