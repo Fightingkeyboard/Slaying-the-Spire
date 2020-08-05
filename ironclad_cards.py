@@ -1903,11 +1903,11 @@ def Whirlwind(gamestate, Upgrade):
     if Upgrade:
         #repeat X times, X is cost, deal 8 damage
         for x in range(len(newstate.monsters)):
-            newstate = dealdmg(newstate, 8, hitmonster, newstate.player.energy)
+            newstate = dealdmg(newstate, 8, x, newstate.player.energy)
     else:
         #repaet X times, X is cost, deal 5 damage
         for x in range(len(newstate.monsters)):
-            newstate = dealdmg(newstate, 5, hitmonster, newstate.player.energy)
+            newstate = dealdmg(newstate, 5, x, newstate.player.energy)
 
     return newstate
 
