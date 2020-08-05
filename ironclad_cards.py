@@ -749,7 +749,7 @@ def Bash(gamestate, hitmonster, Upgrade):
         return newstate
 
 #battle trance 0 cost Draw 3 cards. You cannot draw additional cards this turn.
-def Battle_Trance(gamestate, hitmonster, Upgrade):
+def Battle_Trance(gamestate, Upgrade):
     newstate = gamestate
     if Upgrade:
         #Draw 4 Cards
