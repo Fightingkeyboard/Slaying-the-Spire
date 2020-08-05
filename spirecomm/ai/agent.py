@@ -490,6 +490,7 @@ class SimpleAgent:
         d = self.max_leaf_decision(root)
         root = None; #delete tree
 
+        #if we can't make the tree for some reason
         if d == None:
 
         if isinstance(d, str):
