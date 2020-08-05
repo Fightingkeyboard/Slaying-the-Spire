@@ -1348,7 +1348,7 @@ def Impervious(gamestate, Upgrade):
     else:
         #gain 30 Block
         newstate = addblock(newstate, 30)
-        newstate.exhaust_pile.append("Impervious", 'exhaust_pile')
+        newstate = addcard(newstate, "Impervious", 'exhaust_pile')
 
     return newstate
 
