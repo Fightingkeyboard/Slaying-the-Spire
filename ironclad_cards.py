@@ -116,6 +116,7 @@ def dealdmg(gamestate, damage, monster, attacknum = 1):
                 newstate.player.powers.remove(power_player)
 
     for x in range(attacknum):
+    
     #need to check block. if block is existed, reduce block. Not the HP
         if newstate.monsters[monster].block > 0 :
             if newstate.monsters[monster].block < damage:
@@ -230,6 +231,7 @@ def addcard(gamestate, name, pile, cardobj = False):
 
 def dealvulnerable(gamestate, amount, monster):
     newstate = gamestate
+
     """
     original_stdout = sys.stdout
     with open('a_test.txt', 'a') as f:
@@ -250,46 +252,18 @@ def dealvulnerable(gamestate, amount, monster):
     newvulnerable = Power('Vulnerable', 'Vulnerable', amount)
     newstate.monsters[monster].powers.append(newvulnerable)
 
-    # is_it_exisited = False
-
-    # if len(gamestate.monsters) != 0:
-    #     for x in range(len(newstate.monsters[monster].powers)):
-    #         if newstate.monsters[monster].powers[x].power_name == "Vulnerable":
-    #             pmonster.amount = pmonster.amount + amount
-    #             is_it_exisited = True
-
-    #for pmonster in newstate.monsters[monster].powers[x]:
-    #    if pmonster.power_name == "Vulnerable":
-    #        pmonster.amount = pmonster.amount + amount
-    #        is_it_exisited = True
-
-        # if not is_it_exisited:
-        #     newvulnerable = Power("Vulnerable", "Vulnerable", amount)
-        #     newvulnerable.just_applied = True
-        #     newstate.monsters[monster].powers.append(newvulnerable)
-
-
     return newstate
 
 def dealweak(gamestate, amount, monster):
     newstate = gamestate
-    is_it_exisited = False
-    if len(gamestate.monsters) != 0:
-        if newstate.monsters[monster].powers :
-            for x in range(len(newstate.monsters[monster].powers)):
-                if newstate.monsters[monster].powers[x].power_name == "Weakened":
-                    pmonster.amount = pmonster.amount + amount
-                    is_it_exisited = True
+            
+    for pmonster in newstate.monsters[monster].powers:
+        if pmonster.power_name == 'Weakened':
+            pmonster.amount += amount
+            return newstate
 
-    #for pmonster in newstate.monsters[monster].powers:
-    #    if pmonster.power_name == "Weakened":
-    #        pmonster.amount = pmonster.amount + amount
-    #        is_it_exisited = True
-
-        if not is_it_exisited:
-            newweak = Power("Weakened", "Weakened", amount)
-            newweak.just_applied = True
-            newstate.monsters[monster].powers.append(newweak)
+    newvulnerable = Power('Weakened', 'Weakened', amount)
+    newstate.monsters[monster].powers.append(newvulnerable)
 
     return newstate
 
@@ -415,10 +389,10 @@ def draw(gamestate, amount):
                      print("NEXT")
                      print(" ")
                      sys.stdout = original_stdout_4  # Reset the standard output to its original value
-
+            
                 # add discard_pile to draw_pile
-                #newstate.draw_pile = copy.deepcopy(newstate.discard_pile)
-
+                newstate.draw_pile = copy.deepcopy(newstate.discard_pile)
+                
                 original_stdout_0 = sys.stdout
                 with open('a2_test.txt', 'a') as b:
                      sys.stdout = b  # Change the standard output to the file we created.
@@ -443,18 +417,14 @@ def draw(gamestate, amount):
                      print("NEXT")
                      print(" ")
                      sys.stdout = original_stdout_0  # Reset the standard output to its original value
-
+                
                 # reset the discard_pile
-                #newstate.discard_pile.clear()
-
-
-            """
-
-            """
+                newstate.discard_pile.clear()
+            
             for x in range(left):
                 #max hand
                 if len(newstate.hand) != 10:
-
+                    
                     original_stdout_1 = sys.stdout
                     with open('a3_test.txt', 'a') as c:
                          sys.stdout = c  # Change the standard output to the file we created.
@@ -479,7 +449,7 @@ def draw(gamestate, amount):
                          print("NEXT")
                          print(" ")
                          sys.stdout = original_stdout_1  # Reset the standard output to its original value
-
+                    
                     # chosen_card randomly
                     cardindex = random.randrange(len(newstate.draw_pile))
                     # add chosen_card to hand
@@ -500,8 +470,8 @@ def draw(gamestate, amount):
                                     newstate = draw(newstate, 1)
                                 if newstate.draw_pile[cardindex].type == CardType.CURSE:
                                     newstate = draw(newstate, 1)
-
-                """
+                    """
+                
 
         else:
             for x in range(amount):
@@ -530,10 +500,6 @@ def upgrade(card):
     elif card.upgrades > 1:
         card.upgrades = 1
     return card
-
-# def changestrength(gamestate, amount, character):
-#     newstate = gamestate
-#     character
 
 
 # Effect at end of turn
@@ -2039,3 +2005,4 @@ cards = {
     'Whirlwind' : ['Whirlwind', False, Whirlwind, 'A', False, False], #COST IS VARIABLE PAY ATTENTION
     'Wild Strike' : [1, True, Wildstrike,'A', False, False], #shuffle wound to draw pile
     }
+
