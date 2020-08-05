@@ -1224,7 +1224,7 @@ def Ghostly_Armor(gamestate, Upgrade):
     return newstate
 
 #havoc 1 cost Play the top card of your draw pile and Exhaust it.
-def Havoc(gamestate, cardindex, Upgrade):
+def Havoc(gamestate, Upgrade):
     newstate = gamestate
     card = random.randrange(len(newstate.draw_pile))
     newstate = addcard(newstate, newstate.hand[card].name, 'hand')
