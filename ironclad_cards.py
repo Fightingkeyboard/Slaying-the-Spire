@@ -148,7 +148,7 @@ def player_take_damage(gamestate):
     #check all monsters
     for monster in range(len(newstate.monsters)):
         # check is_monster_dead
-        if not monster.is_gone:
+    	if not monster.is_gone:
             # Attack n times
             for attackmum in range(newstate.monsters[monster].move_hits):
                 # lose block first
@@ -159,10 +159,10 @@ def player_take_damage(gamestate):
                         newstate.player.current_hp - left
                     else:
                         newstate.player.block -= newstate.monsters[monster].move_adjusted_damage
-                # lose hp if no block
+            	# lose hp if no block
                 else:
                     newstate.player.current_hp -= newstate.monsters[monster].move_adjusted_damage
-                #flame barrier 2 cost Gain 12 Block. Whenever you are attacked this turn, deal 4 damage to the attacker.
+            	#flame barrier 2 cost Gain 12 Block. Whenever you are attacked this turn, deal 4 damage to the attacker.
                 for player_power in newstate.player.powers:
                     if player_power.power_name == "Flame Barrier":
                         newstate = dealdmg(newstate, player_power.amount, monster)
@@ -522,7 +522,7 @@ def end_of_turn(gamestate):
     #combust At the end of your turn, lose 1 HP and deal 5 damage to ALL enemies
     for power_player in newstate.player.powers:
         if power_player.power_name == "Combust":
-            newstate.player.current_hp -= power_player.power.damage
+            newstate.player.current_hp -= power_player.powers.damage
             #deal power_player.amount dmage to All
             for monster in range(len(newstate.monsters)):
                 newstate = dealdmg(newstate, power_player.amount, monster)
@@ -1098,7 +1098,7 @@ def Evolve(gamestate, hitmonster, Upgrade):
 def Exhume(gamestate, Upgrade):
     newstate = gamestate
     # random for now
-    cardindex = random.randrange(len(newstate.exhuast_pile))
+    cardindex = random.randrange(len(newstate.hand))
     #add Place a card from your Exhaust pile
     newstate = addcard(gamestate, newstate.exhaust_pile[cardindex].name, 'hand')
     #Exhaust
@@ -1768,13 +1768,13 @@ def Spot_Weakness(gamestate, Upgrade):
     if Upgrade:
         #if an enemy intends to attack
         for Intend_monster in newstate.monsters:
-            if Intend_monster.intend == Intend.ATTACK:
+            if Intend_monster.intent == Intent.ATTACK:
                 #gain 4 Strength
                 newstate = player_gain_strength(newstate, 4)
     else:
         #if an enemy intends to attack
         for Intend_monster in newstate.monsters:
-            if Intend_monster.intend == Intend.ATTACK:
+            if Intend_monster.intent == Intent.ATTACK:
                 #gain 3 Strength
                 newstate = player_gain_strength(newstate, 3)
 
@@ -2016,4 +2016,5 @@ cards = {
     'Whirlwind' : ['Whirlwind', False, Whirlwind, 'A', False, False], #COST IS VARIABLE PAY ATTENTION
     'Wild Strike' : [1, True, Wildstrike,'A', False, False], #shuffle wound to draw pile
     }
+
 
