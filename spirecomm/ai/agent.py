@@ -332,9 +332,10 @@ def build_tree(gamestate):
                     next_state.hand.remove(c)
                     next_state.player.energy -= p.cost
                     for monsterindex in range(len(next_state.monsters)):
-                        next_state = get_next_game_state(p, next_state, monsterindex)
-                        child = Node(next_state, parent = gamestate)
-                        build_tree(child)
+                        if not next_state.monsters[monsterindex].is_gone:
+                            next_state = get_next_game_state(p, next_state, monsterindex)
+                            child = Node(next_state, parent = gamestate)
+                            build_tree(child)
 
                 #don't need target
                 else:
