@@ -1068,7 +1068,7 @@ def Dual_Wield(gamestate, Upgrade):
     return newstate
 
 #entrench 2(1) cost Double your current Block.
-def Entrench(gamestate, hitmonster, Upgrade):
+def Entrench(gamestate, Upgrade):
     newstate = gamestate
 
     newstate.player.block = newstate.player.block * 2
