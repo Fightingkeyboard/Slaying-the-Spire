@@ -1261,7 +1261,7 @@ def Heavy_Blade(gamestate, hitmonster, Upgrade):
     newstate = gamestate
     if Upgrade:
         #Strength affects Heavy Blade 5 times
-        if power_player in newstate.player.powers:
+        for power_player in newstate.player.powers:
             if power_player.power_name == "Strength":
                 power_player.amount = power_player.amount * 5
 
@@ -1274,7 +1274,7 @@ def Heavy_Blade(gamestate, hitmonster, Upgrade):
 
     else:
         #Strength affects Heavy Blade 3 times
-        if power_player in newstate.player.powers:
+        for power_player in newstate.player.powers:
             if power_player.power_name == "Strength":
                 power_player.amount = power_player.amount * 3
 
