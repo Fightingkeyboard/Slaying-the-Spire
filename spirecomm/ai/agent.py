@@ -469,7 +469,7 @@ class SimpleAgent:
 
         #test end turn
         #return "End_Turn"
-
+        d = 0
 
         #make SimGame object containing current real gamestate
         n = getstate(copy.deepcopy(self.game))
