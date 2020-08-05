@@ -148,23 +148,24 @@ def player_take_damage(gamestate):
     #check all monsters
     for monster in range(len(newstate.monsters)):
         # check is_monster_dead
-        # Attack n times
-        for attackmum in range(newstate.monsters[monster].move_hits):
-            # lose block first
-            if newstate.player.block > 0:
-                if newstate.monsters[monster].block < newstate.monsters[monster].move_adjusted_damage:
-                    left = newstate.monsters[monster].move_adjusted_damage - newstate.player.block
-                    newstate.player.block = 0
-                    newstate.player.current_hp - left
+        if not monster.is_gone:
+            # Attack n times
+            for attackmum in range(newstate.monsters[monster].move_hits):
+                # lose block first
+                if newstate.player.block > 0:
+                    if newstate.monsters[monster].block < newstate.monsters[monster].move_adjusted_damage:
+                        left = newstate.monsters[monster].move_adjusted_damage - newstate.player.block
+                        newstate.player.block = 0
+                        newstate.player.current_hp - left
+                    else:
+                        newstate.player.block -= newstate.monsters[monster].move_adjusted_damage
+                # lose hp if no block
                 else:
-                    newstate.player.block -= newstate.monsters[monster].move_adjusted_damage
-            # lose hp if no block
-            else:
-                newstate.player.current_hp -= newstate.monsters[monster].move_adjusted_damage
-            #flame barrier 2 cost Gain 12 Block. Whenever you are attacked this turn, deal 4 damage to the attacker.
-            for player_power in newstate.player.powers:
-                if player_power.power_name == "Flame Barrier":
-                    newstate = dealdmg(newstate, player_power.amount, monster)
+                    newstate.player.current_hp -= newstate.monsters[monster].move_adjusted_damage
+                #flame barrier 2 cost Gain 12 Block. Whenever you are attacked this turn, deal 4 damage to the attacker.
+                for player_power in newstate.player.powers:
+                    if player_power.power_name == "Flame Barrier":
+                        newstate = dealdmg(newstate, player_power.amount, monster)
     # only this turn
     for player_power in newstate.player.powers:
         if player_power.power_name == "Flame Barrier":
