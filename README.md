@@ -32,12 +32,4 @@ If the mod does not run correctly
 You can find it Steam->select "Slay the Spire" -> click "Manage"-> "Browse localfile"->"Resource"
 
 
-# Theory : 
-  
-# Overview :
-
-# Future Improvements:
- * Develop the website
- * Improve the sample AI by using Minimax algorithm
-
 [Presentation Link - Has more diagrams and info](https://docs.google.com/presentation/d/1RxQuOPTGZf5BejvV4l8MaKA3IbAYYN19-rI9gjpSf4s/edit#slide=id.p)
