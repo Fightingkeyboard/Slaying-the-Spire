@@ -1948,6 +1948,36 @@ def Wildstrike(gamestate, hitmonster, Upgrade):
 
     return newstate
 
+#Status_Card
+def Slimed(gamastate, upgrade):
+  newstate = gamestate
+  newstate = addcard(newstate ,"Slimed",'exhuast_plie')
+  return newstate
+
+def Burn(gamastate,upgrade):
+    newstate = gamestate
+    return newstate
+    
+def Dazed(gamastate, upgrade):
+    newstate = gamestate
+    return newstate
+
+def Wound(gamastate, upgrade):
+    newstate = gamestate
+    return newstate
+    
+def Void(gamastate, upgrade):
+    newstate = gamestate
+    return newstate
+#dict of cards
+#cost, target, function, type, ethereal
+#target true = card can target enemy
+#target false = card just gets played
+#type = A for Attack,  P for Power, S for Skill, ST for Status
+#ethereal = whether the card is exhausted after end of turn
+#choose_headbut(), choose_armaments() = False, if not need
+
+# unplayable_card cost? for now they are 0 cost
 cards = {
     'Anger' : [0, True, Anger, 'A', False, False],
     'Armaments' : [1, False, Armaments, 'S', False, choose_Armaments], #need upgrade function
@@ -2024,6 +2054,11 @@ cards = {
     'Warcry' : [0, False, Warcry, 'S', False, False],
     'Whirlwind' : ['Whirlwind', False, Whirlwind, 'A', False, False], #COST IS VARIABLE PAY ATTENTION
     'Wild Strike' : [1, True, Wildstrike,'A', False, False], #shuffle wound to draw pile
+    'Slimed' : [1, False, Slimed, 'ST', False, False],
+    'Burn' : [0, False, Burn, 'ST', False, False],
+    'Dazed' : [0, False, Dazed, 'ST', True, False],
+    'Wound' : [0, False, Wound, 'ST', False, False],
+    'Void' : [0, False, Void, 'ST', True, False],
     }
 
 
