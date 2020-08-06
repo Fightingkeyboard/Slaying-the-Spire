@@ -1619,7 +1619,7 @@ def Reckless_Charge(gamestate, hitmonster, Upgrade):
     return newstate
 
 #rupture 1 cost Whenever you lose HP from a card, gain 1 Strength.
-def Rupture(gamestate, hitmonster, Upgrade):
+def Rupture(gamestate, Upgrade):
     newstate = gamestate
     #whenevr player lose Hp from a cards gain 1 Strength
     New_power = Power("Ruptrue", "Rupture", 1)
