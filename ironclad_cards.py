@@ -1098,7 +1098,7 @@ def Evolve(gamestate, hitmonster, Upgrade):
 def Exhume(gamestate, Upgrade):
     newstate = gamestate
     # random for now
-    cardindex = random.randrange(len(newstate.hand))
+    cardindex = random.randrange(len(newstate.exhaust_pile))
     #add Place a card from your Exhaust pile
     newstate = addcard(gamestate, newstate.exhaust_pile[cardindex].name, 'hand')
     #Exhaust
