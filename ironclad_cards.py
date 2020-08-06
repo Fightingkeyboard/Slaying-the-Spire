@@ -1385,13 +1385,13 @@ def Intimidate(gamestate, Upgrade):
     if Upgrade:
         #add apply 2 weeak to All enemies.
         for x in range(len(newstate.monsters)):
-            newstate = dealweak(newstate, 2, newstate.monsters[x])
+            newstate = dealweak(newstate, 2, x)
 
         newstate = addcard(newstate, "Intimidate", 'exhaust_pile')
     else:
         #add apply 1 weeak to All enemies.
         for x in range(len(newstate.monsters)):
-            newstate = dealweak(newstate, 1, newstate.monsters[x])
+            newstate = dealweak(newstate, 1, x)
 
         newstate = addcard(newstate, "Intimidate", 'exhaust_pile')
 
@@ -1733,14 +1733,14 @@ def Shockwave(gamestate, Upgrade):
     if Upgrade:
     #add apply 5 Weak and Vulnerable to All enemies
         for x in range(len(newstate.monsters)):
-            newstate = dealweak(newstate, 5, newstate.monsters[x])
+            newstate = dealweak(newstate, 5, x)
             newstate = dealvulnerable(newstate, 5, x)
         newstate = addcard(newstate, "Shockwave", 'exhaust_pile')
 
     else:
         #add apply 3 Weak and Vulnerable to All enemies
         for x in range(len(newstate.monsters)):
-            newstate = dealweak(newstate, 3, newstate.monsters[x])
+            newstate = dealweak(newstate, 3, x)
             newstate = dealvulnerable(newstate, 3, x)
         newstate = addcard(newstate, "Shockwave", 'exhaust_pile')
 
