@@ -1762,9 +1762,18 @@ def Shrug_It_Off(gamestate, Upgrade):
     return newstate
 
 #spot weakness 1 cost If an enemy intends to attack, gain 3 Strength.
-def Spot_Weakness(gamestate, Upgrade):
+#NEED Target_Monster
+def Spot_Weakness(gamestate, hitmonster,Upgrade):
     newstate = gamestate
-
+    if Upgrade:
+        if newstate.monsters[hitmonster].intent == Intent.ATTACK:
+            #gain 4 Strength
+            newstate = player_gain_strength(newstate, 4)
+    else:
+        if newstate.monsters[hitmonster].intent == Intent.ATTACK:
+            #gain 3 Strength
+            newstate = player_gain_strength(newstate, 3)
+   """
     if Upgrade:
         #if an enemy intends to attack
         for Intend_monster in newstate.monsters:
@@ -1777,7 +1786,7 @@ def Spot_Weakness(gamestate, Upgrade):
             if Intend_monster.intent == Intent.ATTACK:
                 #gain 3 Strength
                 newstate = player_gain_strength(newstate, 3)
-
+   """
     return newstate
 
 #strike 1 cost Deal 6 damage.
@@ -2004,7 +2013,7 @@ cards = {
     'Sever Soul' : [2, False, Sever_Soul, 'A', False, False],
     'Shockwave' : [2, False, Shockwave, 'S', False, False], # exhaust
     'Shrug It Off' : [1, False, Shrug_It_Off, 'S', False, False], #draw
-    'Spot Weakness' : [1, False, Spot_Weakness, 'S', False, False], #check enemy intent
+    'Spot Weakness' : [1, True, Spot_Weakness, 'S', False, False], #check enemy intent, NEED TARGET_MONSTER
     'Strike' : [1, True, Strike, 'A', False, False],
     'Second Wind' : [1, False, Second_Wind, 'S', False, False], # #Exhaust all non-Attack Cards in your hand.
     'Sword Boomerang' : [1, True, Sword_Boomerang, 'A', False, False], #some way to handle probability
