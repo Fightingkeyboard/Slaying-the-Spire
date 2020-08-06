@@ -1130,7 +1130,7 @@ def Feed(gamestate, hitmonster, Upgrade):
     return newstate
 
 #feel no pain 1 cost Whenever a card is Exhausted, gain 3 Block.
-def Feel_No_Pain(gamestate, hitmonster, Upgrade):
+def Feel_No_Pain(gamestate, Upgrade):
     newstate = gamestate
 
     if Upgrade :
