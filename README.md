@@ -8,11 +8,6 @@ Goals: improvements of existing ai based on certain categories like clear rate, 
 Website : https://slayingthespire.netlify.app/aicomparison.html
 
 
-
-|  | | 
-| ---- | --- | 
-|![draftbot card](utilities/draftbot.png)| <h2>Tech Used</h2><h3><br/><ul><li>Python</li><li>Website</li></li><li>Simple AI</li><li>Minimax algorithm</li></ul></h3>|
-
 # SetUp :
 1. Install three mods
    * Install [Communication Mod](https://github.com/ForgottenArbiter/CommunicationMod)
