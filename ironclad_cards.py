@@ -688,13 +688,13 @@ def Anger(gamestate, hitmonster, Upgrade):
     if Upgrade :
         #deal 8 damge
         newstate = dealdmg(newstate, 8, hitmonster)
-        newstate = addcard(newstate, "anger", 'discard_pile')
+        newstate = addcard(newstate, "Anger", 'discard_pile')
         return newstate
     else :
         #deal 6 damage
         newstate = dealdmg(newstate, 6, hitmonster)
         #add a copy of this card to your discard pile
-        newstate = addcard(newstate, "anger", 'discard_pile')
+        newstate = addcard(newstate, "Anger", 'discard_pile')
         return newstate
 #helper function for armaments
 def choose_Armaments (gamestate, cardindex, upgrade):
