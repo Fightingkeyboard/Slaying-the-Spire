@@ -4,6 +4,7 @@ import sys
 from anytree import Node, RenderTree, LevelOrderGroupIter
 import copy
 
+from card_dictionary import *
 import ironclad_cards
 from spirecomm.spire.game import Game
 from spirecomm.spire.character import Intent, PlayerClass
