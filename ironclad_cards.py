@@ -290,7 +290,7 @@ def monster_lose_strength(gamestate, amount, monster):
 
     for power_monster in newstate.monsters[monster].powers:
         if power_monster.power_name == "Strength":
-            power_name.amount = power_name.amount - amount
+            power_monster.amount = power_monster.amount - amount
 
     return newstate
 
