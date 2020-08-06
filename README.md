@@ -32,48 +32,12 @@ If the mod does not run correctly
 You can find it Steam->select "Slay the Spire" -> click "Manage"-> "Browse localfile"->"Resource"
 
 
-# Building Deck :
-![card_choice_screen](utilities/Building_deck_.png)
-  
-  We are using the data form (https://spirelogs.com/stats/silent/tierlist.php) as a base data. 
-  
-  The AI always going to select the highest overall score cards.(The Top one is overall, Bottom is upgrade Bonuce ) 
-  
-  If AI does not has enough money to buy the highest overall score cards, select the next overall cards. If there are same overall cards, Select the highest upgrade bonuce.
-  
-  If upgrade bounce is greater than overall socre cards in a store, select the upgrades Bonuce.
-  
-![shop_screen](utilities/shop.png)
-
- We are also useing the purchased item data as a base data. (https://spirelogs.com/stats/shop-items.php)
- 
-The Upper cards is the class cards, and bottom one is item and potion.
-
-The priority "Class card" -> "shop card" -> "potion" for now (It could be changed) 
-
-It will be chosen by the winrates base on the data. 
-create converter caculate winrate to overall points
-
-e.g)
-we need to convert postion winrate to overall points
-* 0% ~ 10% winrate for shop card = 30 overall points
-* 10% ~ 20% winrate for shop card = 60 overall points
-* 20% ~ 40% winrate for shop card = 100 overall points
-* 40% ~ 50% winrate for shop card = 130 overall points
-* 50% ~ 100% winrate for shop card = 200 overall points
-
-
 # Theory : 
-  * Run the AI with the base data.
-  * Modify the base data, bese on the Result of Run.
-  * The data will be more accurately.
   
 # Overview :
 
 # Future Improvements:
  * Develop the website
  * Improve the sample AI by using Minimax algorithm
- * spirelog.com is updated, check the new table, and the Deck Building will be changed.
- (https://dev.spirelogs.com/ironclad/shop.php)
 
 [Presentation Link - Has more diagrams and info](https://docs.google.com/presentation/d/1RxQuOPTGZf5BejvV4l8MaKA3IbAYYN19-rI9gjpSf4s/edit#slide=id.p)
