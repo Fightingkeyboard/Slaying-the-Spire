@@ -5,7 +5,7 @@ This project is built using ForgottenArbiter's spirecomm which communicates with
 
 Goals: improvements of existing ai based on certain categories like clear rate, and speed by using Minimax algorithm.
 
-Website : Empty for now
+Website : https://slayingthespire.netlify.app/aicomparison.html
 
 
 
