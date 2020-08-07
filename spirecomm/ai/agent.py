@@ -55,7 +55,9 @@ def eval_function(gamestate):
     #eval out of 1000 or so, can be more or less
     eval = 0
     #hp
-    eval += (gamestate.player.current_hp * 2)
+    eval += gamestate.player.current_hp
+    if gamestate.player.current_hp < 1:
+        eval -= 200
     eval += gamestate.gold
     if gamestate.monsters == []:
         eval += 200
